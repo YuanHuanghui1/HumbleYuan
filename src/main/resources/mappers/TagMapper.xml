@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.humbleyuan.blogfront.mapper.TagMapper">
+    <!--基本的tag信息-->
+    <resultMap id="BaseResultMap" type="com.humbleyuan.blogfront.entity.Tag">
+        <id column="tag_id" property="tagId" jdbcType="INTEGER"/>
+        <result column="tag_title" property="tagTitle" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 获取tag集合用于前台显示 -->
+    <select id="getAllTags" resultMap="BaseResultMap">
+        select  tag_id, tag_title 
+        from bg_tag
+    </select>
+
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.humbleyuan.blogfront.mapper.NoticeMapper">
+    <!--基本的通知信息notice-->
+    <resultMap id="BaseResultMap" type="com.humbleyuan.blogfront.entity.Notice">
+        <id column="notice_id" property="noticeId" jdbcType="INTEGER"/>
+        <result column="notice_title" property="noticeTitle" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <!-- 获取类型集合用于前台显示 -->
+    <select id="getDisplayNoticesList" resultMap="BaseResultMap">
+        select notice_id, notice_title
+        from sys_notice where display=1
+    </select>
+
+</mapper>

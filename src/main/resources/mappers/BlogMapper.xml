@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.humbleyuan.blogfront.mapper.BlogMapper">
+    <!--基本的blog信息-->
+    <resultMap id="BaseResultMap" type="com.humbleyuan.blogfront.entity.Blog">
+        <id column="blog_id" property="blogId" jdbcType="INTEGER"/>
+        <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+        <result column="weight" property="weight" jdbcType="INTEGER"/>
+        <result column="support" property="support" jdbcType="CHAR"/>
+        <result column="click" property="click" jdbcType="INTEGER"/>
+        <result column="header_img" property="headerImg" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="CHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+
+        <!-- 使用association实现多表关联查询 -->
+        <association property="category"  javaType="com.humbleyuan.blogfront.entity.Category">
+            <id column="category_id" property="categoryId"/>
+            <result column="category_title" property="categoryTitle"/>
+            <result column="description" property="description"/>
+            <result column="support" property="support"/>
+        </association>
+
+    </resultMap>
+
+    <!--带博客正文的博客信息继承BaseResultMap-->
+    <resultMap id="ResultMapWithBLOBs" type="com.humbleyuan.blogfront.entity.Blog" extends="BaseResultMap">
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <!-- 获取前台主页显示所需的博客信息-->
+    <select id="getFrontBlogsOnMainPage" resultMap="BaseResultMap">
+        select b.blog_id,
+        b.category_id,
+        b.title,
+        b.summary,
+        b.click,
+        b.header_img,
+        b.create_by,
+        b.create_time,
+        b.support,
+        c.category_title
+        from bg_blog b
+        left join bg_category c on b.category_id = c.category_id
+        where status=1
+    </select>
+
+    <!-- 获取最近更新的博客 -->
+    <select id="getRecentBlogs" resultMap="BaseResultMap">
+        select blog_id, title,update_time
+        from bg_blog order by  update_time  desc limit #{i}
+    </select>
+
+    <!-- 获取点击量靠前的博客 -->
+    <select id="getRankingBlogsList" resultMap="BaseResultMap">
+        select blog_id,title,click
+        from bg_blog order by click desc limit #{i}
+    </select>
+
+    <!-- 按权重获取推荐博客 -->
+    <select id="getSupportBlogsList" resultMap="BaseResultMap">
+        select blog_id,title,summary, click,create_time,header_img
+        from bg_blog order by weight desc limit #{i}
+    </select>
+
+</mapper>

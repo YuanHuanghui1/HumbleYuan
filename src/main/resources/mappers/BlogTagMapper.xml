@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.humbleyuan.blogfront.mapper.BlogTagMapper">
+    <!--基本的tag信息-->
+    <resultMap id="BaseResultMap" type="com.humbleyuan.blogfront.entity.BlogTag">
+        <id column="blog_id" property="blogId" jdbcType="INTEGER"/>
+        <result column="tag_id" property="tagId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 获取tag与文章关联的个数 -->
+    <select id="getTagContactWithBlogCount" resultType="java.lang.Integer">
+        select count(*) from bg_blog_tag where tag_id=#{tagId}
+    </select>
+
+</mapper>

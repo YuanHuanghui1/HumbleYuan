@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.humbleyuan.blogfront.mapper.CategoryMapper">
+    <!--基本的Category信息-->
+    <resultMap id="BaseResultMap" type="com.humbleyuan.blogfront.entity.Category">
+        <id column="category_id" property="categoryId" jdbcType="INTEGER"/>
+        <result column="category_title" property="categoryTitle" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="support" property="support" jdbcType="CHAR"/>
+    </resultMap>
+
+
+    <!-- 获取类型集合用于前台显示 -->
+    <select id="getCategoriesList" resultMap="BaseResultMap">
+        select category_id, category_title, weight,support,
+        description
+        from
+        bg_category
+    </select>
+
+</mapper>
