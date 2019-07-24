@@ -71,4 +71,17 @@ public class BlogFrontApplicationTests {
 		System.out.println(blogList.get(0).getCategory().getCategoryTitle());
 	}
 
+	//博客具体内容显示
+	@Test
+	public void getCurrentBlogInfo() {
+		//Blog blog = blogService.getBlogInfoAndTagsAndCloseBlogsById(1);
+
+		List<Blog> blogs = blogService.getRandomBlogsList(BlogsConstant.randomBlogsDisPlayNum);
+
+		for (Blog blog:blogs
+			 ) {
+			System.out.println(blog.toString());
+		}
+
+	}
 }

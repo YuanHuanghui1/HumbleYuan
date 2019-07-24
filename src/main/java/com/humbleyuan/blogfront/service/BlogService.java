@@ -38,4 +38,19 @@ public interface BlogService {
      */
     List<Blog> getSupportBlogsList(int num);
 
+    /**
+     * 获取选中博客信息用于显示
+     * @param blogId
+     * @return 选中博客
+     */
+    Blog getBlogInfoAndTagsAndCloseBlogsById(int blogId);
+
+    /**
+     * 获取随机推荐的博客
+     * @param num
+     * @return 随机推荐博客集合
+     */
+    List<Blog> getRandomBlogsList(int num);
+
+
 }

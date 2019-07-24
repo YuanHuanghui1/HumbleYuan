@@ -24,5 +24,10 @@ public class BlogsConstant {
      */
     public static final int supportBlogsDisplayNum = 5;
 
+    /**
+     * 随机推荐的博客数量
+     */
+    public static final int randomBlogsDisPlayNum = 3;
+
 
 }

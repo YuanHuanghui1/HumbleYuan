@@ -12,4 +12,9 @@
         select count(*) from bg_blog_tag where tag_id=#{tagId}
     </select>
 
+    <!-- 获取与文章相关的tag集合 -->
+    <select id="getTagsByBlogId" resultType="java.lang.Integer">
+        select tag_id from bg_blog_tag where blog_id=#{blogId}
+    </select>
+
 </mapper>

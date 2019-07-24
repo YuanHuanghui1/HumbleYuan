@@ -22,4 +22,11 @@ public interface TagMapper {
      * @return 所需展示标签的集合
      */
     List<Tag> getAllTags();
+
+    /**
+     * 根据tagId获取标签名称
+     * @param tagId
+     * @return 标签名称
+     */
+    Tag getTagTitleByTagId(int tagId);
 }

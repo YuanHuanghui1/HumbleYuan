@@ -13,4 +13,11 @@
         from bg_tag
     </select>
 
+    <!-- 根据tagId获取tag名称 -->
+    <select id="getTagTitleByTagId" resultMap="BaseResultMap">
+        select  tag_id, tag_title
+        from  bg_tag
+        where tag_id =#{tagId}
+    </select>
+
 </mapper>

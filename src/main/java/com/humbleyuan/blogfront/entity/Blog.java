@@ -111,5 +111,15 @@ public class Blog {
      */
     private String updateBy;
 
+    /**
+     * 上一篇博客
+     */
+    private Blog previousBlog;
+
+    /**
+     * 下一篇博客
+     */
+    private Blog nextBlog;
+
 
 }

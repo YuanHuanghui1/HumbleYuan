@@ -40,4 +40,37 @@ public interface BlogMapper {
      * @return 推荐的博客文章
      */
     List<Blog> getSupportBlogsList(int num);
+
+    /**
+     * 获取选中博客信息用于显示
+     * @param blogId
+     * @return 选中博客
+     */
+    Blog getContentAndCategoryById(int blogId);
+
+    /**
+     * 访问量增加
+     * @param blogId
+     */
+    void increaseBlogClick(int blogId);
+
+    /**
+     * 根据id获取下一篇博客
+     * @return下一篇博客
+     */
+    Blog getNextBlogByBlogId(int blogId);
+
+    /**
+     * 根据id获取上一篇博客
+     * @param blogId
+     * @return上一篇博客
+     */
+    Blog getPreviousBlogByBlogId(int blogId);
+
+    /**
+     * 获取随机推荐的博客文章
+     * @param num
+     * @return随机推荐的博客文章集合
+     */
+    List<Blog> getRandomBlogsList(int num);
 }

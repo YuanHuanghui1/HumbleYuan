@@ -68,4 +68,39 @@
         from bg_blog order by weight desc limit #{i}
     </select>
 
+    <!-- 获取选中博客信息用于显示 -->
+    <select id="getContentAndCategoryById" resultMap="BaseResultMap">
+        select b.blog_id, b.category_id, b.title, b.summary, b.status,
+        b.weight, b.support, b.click, b.header_img, b.type,b.content,
+        b.create_by, b.create_time, b.update_by, b.update_time,
+        c.category_title,c.category_id
+        from bg_blog b
+        left join bg_category c on b.category_id = c.category_id
+        where blog_id=#{blogId}
+    </select>
+
+    <!-- 获取上一篇博客 -->
+    <select id="getPreviousBlogByBlogId" resultMap="BaseResultMap">
+        select blog_id,title from bg_blog
+        where blog_id &lt; #{blogId} and status=1 order by blog_id limit 0,1
+    </select>
+
+    <!-- 获取下一篇博客 -->
+    <select id="getNextBlogByBlogId" resultMap="BaseResultMap">
+        select blog_id,title from bg_blog
+        where blog_id &gt; #{blogId} and status=1 order by blog_id desc limit 0,1
+    </select>
+
+    <!-- 获取随机推荐的博客文章 -->
+    <select id="getRandomBlogsList" resultMap="BaseResultMap">
+        select blog_id,title,header_img
+        from bg_blog
+        where status=1 order by rand() limit #{i}
+    </select>
+
+    <!-- 访问量增加 -->
+    <update id="increaseBlogClick">
+        update bg_blog set click=click+1 where blog_id=#{blogId}
+    </update>
+
 </mapper>

@@ -1,7 +1,10 @@
 package com.humbleyuan.blogfront.mapper;
 
+import com.humbleyuan.blogfront.entity.Tag;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @Author: HumbleYuan
@@ -19,4 +22,11 @@ public interface BlogTagMapper {
      * @return 标签与博客关联数
      */
     int getTagContactWithBlogCount(int tagId);
+
+    /**
+     * 获取文章关联的标签集合
+     * @param blogId
+     * @return 文章关联的标签集合
+     */
+    List<Integer> getTagsByBlogId(int blogId);
 }

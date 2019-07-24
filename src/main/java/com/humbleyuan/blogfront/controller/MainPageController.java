@@ -85,23 +85,23 @@ public class MainPageController {
     /**
      * 测试返回model或map，前端axios能否接受
      */
-    @GetMapping("/mainPage")
-    @ResponseBody
-    public Map<String,Object> getFrontBlogsOnMainPage(Integer pageNum) {
-
-        Map<String,Object> mainPageData = new HashMap<>();
-        setCommonMessage(mainPageData);
-
-        //这里要用包装类，否则不能==null
-        PageHelper.startPage(pageNum == null ? 1 : pageNum, 7, "create_time desc");
-
-        PageInfo<Blog> myPage = new PageInfo<>(blogService.getFrontBlogsOnMainPage());
-
-        //放入PageInfo
-        mainPageData.put("blogPageInfo",myPage);
-
-        return mainPageData;
-    }
+//    @GetMapping("/mainPage")
+//    @ResponseBody
+//    public Map<String,Object> getFrontBlogsOnMainPage(Integer pageNum) {
+//
+//        Map<String,Object> mainPageData = new HashMap<>();
+//        setCommonMessage(mainPageData);
+//
+//        //这里要用包装类，否则不能==null
+//        PageHelper.startPage(pageNum == null ? 1 : pageNum, 7, "create_time desc");
+//
+//        PageInfo<Blog> myPage = new PageInfo<>(blogService.getFrontBlogsOnMainPage());
+//
+//        //放入PageInfo
+//        mainPageData.put("blogPageInfo",myPage);
+//
+//        return mainPageData;
+//    }
 
     /**
      * 首页主体（博客文章展示及分页数据）
@@ -154,4 +154,24 @@ public class MainPageController {
         return asideInfo;
     }
 
+    /**
+     * 博客详情获取获取
+     */
+    @GetMapping("/blog")
+    @ResponseBody
+    public Map<String,Object> getCurrentBlogInfo(int blogId) {
+        Map<String,Object> currentBlogInfo = new HashMap<>();
+
+        //获取当前博客的相关信息(包含上一篇及下一篇)
+        currentBlogInfo.put("thisBlog",blogService.getBlogInfoAndTagsAndCloseBlogsById(blogId));
+
+        //获取随机推荐的博客文章
+        currentBlogInfo.put("ranBlogList",
+                blogService.getRandomBlogsList(BlogsConstant.randomBlogsDisPlayNum));
+
+        return currentBlogInfo;
+    }
 }
+
+
+

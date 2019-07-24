@@ -1,7 +1,10 @@
 package com.humbleyuan.blogfront.service.impl;
 
 import com.humbleyuan.blogfront.entity.Blog;
+import com.humbleyuan.blogfront.entity.Tag;
 import com.humbleyuan.blogfront.mapper.BlogMapper;
+import com.humbleyuan.blogfront.mapper.BlogTagMapper;
+import com.humbleyuan.blogfront.mapper.TagMapper;
 import com.humbleyuan.blogfront.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,12 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     BlogMapper blogMapper;
+
+    @Autowired
+    BlogTagMapper blogTagMapper;
+
+    @Autowired
+    TagMapper tagMapper;
 
 
     /**
@@ -58,6 +67,50 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public List<Blog> getSupportBlogsList(int num) {
         return blogMapper.getSupportBlogsList(num);
+    }
+
+    /**
+     * 获取选中博客信息用于显示
+     * @param blogId
+     * @return 选中博客
+     */
+    @Override
+    public Blog getBlogInfoAndTagsAndCloseBlogsById(int blogId) {
+        //先获取博客相关信息包括所属类型
+        Blog b = blogMapper.getContentAndCategoryById(blogId);
+
+        //获取与博客相关的标签id集合
+        List<Integer> tagIdList = blogTagMapper.getTagsByBlogId(blogId);
+
+        String[] contactTags = new String[tagIdList.size()];
+        int index = 0;
+        //遍历id，根据id查标签名称
+        for (int tagId:
+             tagIdList) {
+            contactTags[index++] = tagMapper.getTagTitleByTagId(tagId).getTagTitle();
+        }
+
+        //将b的tag[]属性赋值
+        b.setTags(contactTags);
+
+        //获取邻近的博客文章
+        b.setNextBlog(blogMapper.getNextBlogByBlogId(blogId));
+        b.setPreviousBlog(blogMapper.getPreviousBlogByBlogId(blogId));
+
+        //增加访问量(访问量先加后加区别)
+        blogMapper.increaseBlogClick(blogId);
+
+        return b;
+    }
+
+    /**
+     * 获取随机推荐的博客集合
+     * @param num
+     * @return 随机推荐的博客集合
+     */
+    @Override
+    public List<Blog> getRandomBlogsList(int num) {
+        return blogMapper.getRandomBlogsList(num);
     }
 }
 
